@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kurapika <kurapika@student.42.fr>          +#+  +:+       +#+         #
+#    By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/16 16:01:47 by msekhsou          #+#    #+#              #
-#    Updated: 2023/04/21 01:10:56 by kurapika         ###   ########.fr        #
+#    Created: 2023/05/09 11:17:53 by msekhsou          #+#    #+#              #
+#    Updated: 2023/05/09 11:17:56 by msekhsou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
