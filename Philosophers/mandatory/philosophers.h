@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:18:27 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/05/23 19:21:48 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:50:32 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #ifndef PHILO_H
 #define PHILO_H
 
-#include <pthread.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <sys/time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_infos
 {
@@ -55,5 +55,6 @@ int		ft_atoi(const char *str);
 size_t	ft_strlen(char *s);
 void	args_infos(t_infos *info, int ac, char **av);
 void	init_infos(t_philosopher *philo, t_infos arg, int ac);
+void	philo_routine(t_philosopher *philo, int number);
 
 #endif

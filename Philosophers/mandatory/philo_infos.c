@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:17:35 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/05/23 19:25:57 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/20 12:12:33 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,6 @@ void	init_infos(t_philosopher *philo, t_infos arg, int ac)
 void	cr_mutex_init(pthread_mutex_t *mutex, t_philosopher *philos,
 		int number, pthread_mutex_t *write)
 {
-	int	i;
-
-	i = 0;
-	while (i < number)
-	{
-		philos[i].print = write;
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
-	i = 0;
-	while (i < number)
-	{
-		philos[i].left_fork = &mutex[i % number];
-		philos[i].right_fork = &mutex[(i + 1) % number];
-		i++;
-	}
-	
-}
-void	cr_mutex_init(pthread_mutex_t *mutex, t_philosopher *philos,
-		int number, pthread_mutex_t *write)
-{
     int i;
 
 	i = 0;
@@ -108,12 +87,19 @@ void	philo_routine(t_philosopher *philo, int number)
 	if (!fork)
 		return ;
 	cr_mutex_init(fork, philo, number, &print);
+	start_the_routine(philo, number);
+	while (i < number)
+	{
+		pthread_create(&philo[i].philo_thread, NULL, &routine, &philo[i]);
+	}
 	
 }
 void start_the_routine(t_philosopher *philo, int number)
 {
-    int i = 0;
-    long long start_time = get_the_time(0);
+    int i;
+
+	i = 0;
+    long long start_time = get_the_time();
 
     while (i < number)
 	{
@@ -122,6 +108,7 @@ void start_the_routine(t_philosopher *philo, int number)
         i++;
     }
 }
+
 
 size_t	get_the_time(void)
 {
@@ -132,3 +119,40 @@ size_t	get_the_time(void)
 	milliseconds = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (milliseconds);
 }
+
+
+
+
+
+
+// size_t	get_the_time()
+// {
+// 	struct timeval	time;
+// 	long long		milliseconds;
+
+// 	gettimeofday(&time, NULL);
+// 	milliseconds = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+// 	return (milliseconds);
+// }
+
+// void	cr_mutex_init(pthread_mutex_t *mutex, t_philosopher *philos,
+// 		int number, pthread_mutex_t *write)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < number)
+// 	{
+// 		philos[i].print = write;
+// 		pthread_mutex_init(&mutex[i], NULL);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < number)
+// 	{
+// 		philos[i].left_fork = &mutex[i % number];
+// 		philos[i].right_fork = &mutex[(i + 1) % number];
+// 		i++;
+// 	}
+	
+// }

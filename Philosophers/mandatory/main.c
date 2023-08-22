@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:00:49 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/05/19 18:53:36 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:47:36 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ int	main(int ac, char **av)
 		return(printf("args error"), 1);
 	args_infos(&arg, ac, av);
 	init_infos(infos, arg, ac);
+	philo_routine(infos, arg.philo_nbr);
 }
