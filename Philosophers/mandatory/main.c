@@ -17,12 +17,12 @@ int	main(int ac, char **av)
 	t_infos			arg;
 	t_philosopher	*infos;
 	
-	infos = malloc(sizeof(t_philosopher) * arg.philo_nbr);
-	if (!infos)
-		return (0);
 	if ((ac != 5 && ac != 6) || check_for_char(ac, av))
 		return(printf("args error"), 1);
+	
 	args_infos(&arg, ac, av);
+	infos = malloc(sizeof(t_philosopher) * arg.philo_nbr);
+	if (!infos)
 	init_infos(infos, arg, ac);
 	philo_routine(infos, arg.philo_nbr);
 }

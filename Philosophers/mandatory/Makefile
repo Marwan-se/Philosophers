@@ -17,7 +17,7 @@ SRCS = main.c parsing.c philo_utils.c philo_infos.c
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 

@@ -35,26 +35,34 @@ typedef	struct s_philosopher
 	int				philo_id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*print;
-	pthread_t		philo_thread;
-	long long 		last_meal;
-	long long		time_to_eat;
-	long long 		meals_eaten;
-	long long		time_to_sleep;
-	long long 		duration;
-	long long		remaining_time;
+	pthread_mutex_t	*write;
 	long long		start;
 	int				have_time_to_eat;
 	int				num_of_time_to_eat;
+	pthread_t		philo_thread;
+	long long 		last_meal;
+	long long		time_to_eat;
+	long long		time_to_sleep;
+	long long 		duration;
+	long long		remaining_time;
 } t_philosopher;
 
 
-int		check_for_char(int ac, char **av);
-int		ft_isdigit(int c);
-int		ft_atoi(const char *str);
-size_t	ft_strlen(char *s);
-void	args_infos(t_infos *info, int ac, char **av);
-void	init_infos(t_philosopher *philo, t_infos arg, int ac);
-void	philo_routine(t_philosopher *philo, int number);
+int			check_for_char(int ac, char **av);
+int			ft_isdigit(int c);
+int			ft_atoi(const char *str);
+size_t		ft_strlen(char *s);
+void		args_infos(t_infos *info, int ac, char **av);
+void		init_infos(t_philosopher *philo, t_infos arg, int ac);
+void		philo_routine(t_philosopher *philo, int number);
+void 		start_the_routine(t_philosopher *philo, int number);
+long long 	get_the_time(long long beginning_time);
+void		*routine(void *arg);
+void		*ft_sleep(void *philo);
+int			is_eating(t_philosopher *philo, int number);
+void		mutex_destroy(pthread_mutex_t *fork, int number);
+int 		is_death(t_philosopher *philo, int number);
 
 #endif
+
+
