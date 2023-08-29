@@ -32,11 +32,13 @@ void	init_infos(t_philosopher *philo, t_infos arg, int ac)
 	i = 0;
 	while (i < arg.philo_nbr)
 	{
+	
 		philo[i].philo_id = i;
 		philo[i].time_to_sleep = arg.time_to_sleep;
 		philo[i].time_to_eat = arg.time_to_eat;
-		philo[i].duration = arg.time_to_die; //life time
-		philo[i].remaining_time = arg.time_to_die; // time left
+		philo[i].duration = arg.time_to_die;
+		philo[i].remaining_time = arg.time_to_die;
+		i++;
 	}
 		if (ac == 6)
 		{
@@ -45,7 +47,6 @@ void	init_infos(t_philosopher *philo, t_infos arg, int ac)
 		}
 		else
 			philo[i].have_time_to_eat = false;
-		i++;
 }
 
 void cr_mutex_init(pthread_mutex_t *mutex, t_philosopher *philos, int number,
@@ -99,12 +100,12 @@ void	*routine(void *philo)
 		usleep(1000);
 	pthread_mutex_lock(philosopher->left_fork);
 	pthread_mutex_lock(philosopher->write);
-	printf("%lld ms philosopher %d has taken a fork\n",
+	printf("%lld ms philosopher %d has FIRST taken a fork\n",
 		get_the_time(philosopher->start), philosopher->philo_id);
 	pthread_mutex_unlock(philosopher->write);
 	pthread_mutex_lock(philosopher->right_fork);
 	pthread_mutex_lock(philosopher->write);
-	printf("%lld ms philosopher %d has taken a fork\n",
+	printf("%lld ms philosopher %d has SECOND taken a fork\n",
 		get_the_time(philosopher->start), philosopher->philo_id);
 	printf("%lld ms philosopher %d is eating\n",
 		get_the_time(philosopher->start), philosopher->philo_id);

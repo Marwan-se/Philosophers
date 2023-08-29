@@ -22,7 +22,6 @@ int	main(int ac, char **av)
 	
 	args_infos(&arg, ac, av);
 	infos = malloc(sizeof(t_philosopher) * arg.philo_nbr);
-	if (!infos)
 	init_infos(infos, arg, ac);
 	philo_routine(infos, arg.philo_nbr);
 }
