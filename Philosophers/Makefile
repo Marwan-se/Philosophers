@@ -6,7 +6,7 @@
 #    By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 11:17:53 by msekhsou          #+#    #+#              #
-#    Updated: 2023/08/31 17:21:35 by msekhsou         ###   ########.fr        #
+#    Updated: 2023/08/31 17:47:57 by msekhsou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ SRCS = main.c parsing.c philo_utils.c philo_infos.c philo_infos2.c
 
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror 
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 

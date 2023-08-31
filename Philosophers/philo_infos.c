@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:17:35 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 17:07:55 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:45:19 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,43 +51,51 @@ int	init_infos(t_philosopher *philo, t_infos arg, int ac)
 	return (0);
 }
 
-void philo_routine(t_philosopher *philo, int number)
+void	cr_mutex_init(t_philosopher *philo, int number, 
+	pthread_mutex_t *fork, pthread_mutex_t *write)
 {
-    pthread_mutex_t *fork;
-    pthread_mutex_t *write;
-    int i;
+	int	i;
 
-    i = 0;
-    fork = malloc(sizeof(pthread_mutex_t) * number);
-    write = malloc(sizeof(pthread_mutex_t));
-   	pthread_mutex_init(write, NULL);
-    if (!fork)
-        return;
-    while (i < number)
+	i = 0;
+	while (i < number)
 	{
-        philo[i].write = write;
-        pthread_mutex_init(&fork[i], NULL);
-   		pthread_mutex_init(&philo[i].mutex_last_meal, NULL);
-   		pthread_mutex_init(&philo[i].mutex_eat_num, NULL);
-        philo[i].left_fork = &fork[i];
-        philo[i].right_fork = &fork[(i + 1) % number];
-        i++;
-    }
-    i = 0;
-    start_the_routine(philo, number);
-    while (i < number)
+		philo[i].write = write;
+		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&philo[i].mutex_last_meal, NULL);
+		pthread_mutex_init(&philo[i].mutex_eat_num, NULL);
+		philo[i].left_fork = &fork[i];
+		philo[i].right_fork = &fork[(i + 1) % number];
+		i++;
+	}
+}
+
+void	philo_routine(t_philosopher *philo, int number)
+{
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*write;
+	int				i;
+
+	i = 0;
+	fork = malloc(sizeof(pthread_mutex_t) * number);
+	write = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(write, NULL);
+	if (!fork)
+		return ;
+	cr_mutex_init(philo, number, fork, write);
+	start_the_routine(philo, number);
+	while (i < number)
 	{
-        pthread_create(&philo[i].philo_thread, NULL, &routine, &philo[i]);
-        i++;
-    }
-    if (is_death(philo, number) && philo[0].num_of_time_to_eat == 0)
+		pthread_create(&philo[i].philo_thread, NULL, &routine, &philo[i]);
+		i++;
+	}
+	if (is_death(philo, number) && philo[0].num_of_time_to_eat == 0)
 	{
-        free(fork);
-        pthread_mutex_destroy(write);
-        free(write);
-        mutex_destroy(fork, number);
-        return;
-    }
+		free(fork);
+		pthread_mutex_destroy(write);
+		free(write);
+		mutex_destroy(fork, number);
+		return ;
+	}
 }
 
 void	start_the_routine(t_philosopher *philo, int number)
