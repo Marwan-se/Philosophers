@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:38:23 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/30 21:33:34 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:29:47 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	*routine(void *philo)
 	ft_usleep_test(philosopher->time_to_eat);
 	pthread_mutex_unlock(philosopher->left_fork);
 	pthread_mutex_unlock(philosopher->right_fork);
+	pthread_mutex_lock(&philosopher->mutex_last_meal);
 	philosopher->last_meal = get_the_time(0);
+	pthread_mutex_unlock(&philosopher->mutex_last_meal);	
 	if (philosopher->have_time_to_eat)
 		philosopher->num_of_time_to_eat--;
 	ft_sleep(philosopher);
@@ -79,6 +81,7 @@ long long	get_the_time(long long beginning_time)
 int	is_death(t_philosopher *philo, int num)
 {
 	int	i;
+	int	var;
 
 	i = 0;
 	while (1)
@@ -86,8 +89,11 @@ int	is_death(t_philosopher *philo, int num)
 		i = 0;
 		while (i < num)
 		{
+			pthread_mutex_lock(&philo[i % num].mutex_last_meal);
+			var = get_the_time(philo[i % num].last_meal);
+			pthread_mutex_unlock(&philo[i % num].mutex_last_meal);
 			if (philo[i % num].duration
-				< get_the_time(philo[i % num].last_meal))
+				< var)
 			{
 				pthread_mutex_lock(philo[i].write);
 				printf("%lld ms philosopher %d died\n", 

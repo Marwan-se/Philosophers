@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:17:35 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/30 21:45:46 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:22:03 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	philo_routine(t_philosopher *philo, int number)
 	{
 		philo[i].write = write;
 		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&philo[i].mutex_last_meal, NULL);
 		philo[i].left_fork = &fork[i % number];
 		philo[i].right_fork = &fork[(i + 1) % number];
 		i++;
