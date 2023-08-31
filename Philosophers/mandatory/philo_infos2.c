@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:38:23 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 17:09:49 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:15:43 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	*routine(void *philo)
 	pthread_mutex_lock(philosopher->left_fork);
 	pthread_mutex_lock(philosopher->write);
 	printf("%lld ms philosopher %d has taken a fork\n",
-		get_the_time(philosopher->start), philosopher->philo_id);
+		get_the_time(philosopher->start), philosopher->philo_id + 1);
 	pthread_mutex_unlock(philosopher->write);
 	pthread_mutex_lock(philosopher->right_fork);
 	pthread_mutex_lock(philosopher->write);
 	printf("%lld ms philosopher %d has taken a fork\n",
-		get_the_time(philosopher->start), philosopher->philo_id);
+		get_the_time(philosopher->start), philosopher->philo_id + 1);
 	printf("%lld ms philosopher %d is eating\n",
-		get_the_time(philosopher->start), philosopher->philo_id);
+		get_the_time(philosopher->start), philosopher->philo_id + 1);
 	pthread_mutex_unlock(philosopher->write);
 	ft_usleep_test(philosopher->time_to_eat);
 	pthread_mutex_unlock(philosopher->left_fork);
@@ -63,12 +63,12 @@ void	*ft_sleep(void *philo)
 	philosophers = (t_philosopher *) philo;
 	pthread_mutex_lock(philosophers->write);
 	printf("%lld ms philosopher %d is sleeping\n",
-		get_the_time(philosophers->start), philosophers->philo_id);
+		get_the_time(philosophers->start), philosophers->philo_id + 1);
 	pthread_mutex_unlock(philosophers->write);
 	usleep(philosophers->time_to_sleep * 1000);
 	pthread_mutex_lock(philosophers->write);
 	printf("%lld ms philosopher %d is thinking\n",
-		get_the_time(philosophers->start), philosophers->philo_id);
+		get_the_time(philosophers->start), philosophers->philo_id + 1);
 	pthread_mutex_unlock(philosophers->write);
 	routine(philosophers);
 	return (NULL);
@@ -103,7 +103,7 @@ int	is_death(t_philosopher *philo, int num)
 				pthread_mutex_lock(philo[i].write);
 				printf("%lld ms philosopher %d died\n", 
 					get_the_time(philo[i % num].start), 
-					philo[i % num].philo_id);
+					philo[i % num].philo_id + 1);
 				return (1);
 			}
 			i++;
