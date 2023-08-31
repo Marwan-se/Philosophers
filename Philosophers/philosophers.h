@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:18:27 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 17:45:39 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:01:17 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,13 @@ void		*routine(void *arg);
 void		*ft_sleep(void *philo);
 int			is_eating(t_philosopher *philo, int number);
 void		mutex_destroy(pthread_mutex_t *fork, int number);
-int			is_death(t_philosopher *philo, int number);
+int			is_dead(t_philosopher *philo, int number);
 void		ft_usleep_test(int time);
 int			check_0(t_infos *arg);
-void	cr_mutex_init(t_philosopher *philo, int number, pthread_mutex_t *fork, pthread_mutex_t *write);
+void		cr_mutex_init(t_philosopher *philo, int number, 
+				pthread_mutex_t *fork, pthread_mutex_t *write);
+void		take_forks(t_philosopher *philosopher);
+void		update_last_meal(t_philosopher *philosopher);
+int			has_any_philosopher_died(t_philosopher *philo, int num);
 
 #endif

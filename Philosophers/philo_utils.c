@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:18:18 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/05/09 11:18:19 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:59:46 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,28 @@ int	ft_atoi(const char *str)
 		x++;
 	}
 	return (res * sign);
+}
+
+int	has_any_philosopher_died(t_philosopher *philo, int num)
+{
+	int	i;
+	int	last_meal;
+
+	i = 0;
+	while (i < num)
+	{
+		pthread_mutex_lock(&philo[i].mutex_last_meal);
+		last_meal = get_the_time(philo[i].last_meal);
+		pthread_mutex_unlock(&philo[i].mutex_last_meal);
+		if (philo[i].duration < last_meal)
+		{
+			pthread_mutex_lock(philo[i].write);
+			printf("%lld ms philosopher %d died\n",
+				get_the_time(philo[i].start),
+				philo[i].philo_id + (1));
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

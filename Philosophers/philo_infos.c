@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:17:35 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 17:45:19 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 18:38:56 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	philo_routine(t_philosopher *philo, int number)
 		pthread_create(&philo[i].philo_thread, NULL, &routine, &philo[i]);
 		i++;
 	}
-	if (is_death(philo, number) && philo[0].num_of_time_to_eat == 0)
+	if (is_dead(philo, number) && philo[0].num_of_time_to_eat == 0)
 	{
 		free(fork);
 		pthread_mutex_destroy(write);
