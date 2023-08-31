@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:18:27 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 16:20:43 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:59:31 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philosopher
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*write;
 	pthread_mutex_t mutex_last_meal;
+	pthread_mutex_t mutex_eat_num;
 	long long		start;
 	int				have_time_to_eat;
 	int				num_of_time_to_eat;

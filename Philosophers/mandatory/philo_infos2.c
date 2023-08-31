@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:38:23 by msekhsou          #+#    #+#             */
-/*   Updated: 2023/08/31 16:29:47 by msekhsou         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:03:38 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ void	*routine(void *philo)
 	philosopher->last_meal = get_the_time(0);
 	pthread_mutex_unlock(&philosopher->mutex_last_meal);	
 	if (philosopher->have_time_to_eat)
+	{
+		pthread_mutex_lock(&philosopher->mutex_eat_num);
 		philosopher->num_of_time_to_eat--;
+		pthread_mutex_unlock(&philosopher->mutex_eat_num);
+	}
 	ft_sleep(philosopher);
 	return (NULL);
 }
@@ -81,7 +85,8 @@ long long	get_the_time(long long beginning_time)
 int	is_death(t_philosopher *philo, int num)
 {
 	int	i;
-	int	var;
+	int	last_meal;
+	int	eat_num;
 
 	i = 0;
 	while (1)
@@ -90,10 +95,10 @@ int	is_death(t_philosopher *philo, int num)
 		while (i < num)
 		{
 			pthread_mutex_lock(&philo[i % num].mutex_last_meal);
-			var = get_the_time(philo[i % num].last_meal);
+			last_meal = get_the_time(philo[i % num].last_meal);
 			pthread_mutex_unlock(&philo[i % num].mutex_last_meal);
 			if (philo[i % num].duration
-				< var)
+				< last_meal)
 			{
 				pthread_mutex_lock(philo[i].write);
 				printf("%lld ms philosopher %d died\n", 
@@ -102,8 +107,11 @@ int	is_death(t_philosopher *philo, int num)
 				return (1);
 			}
 			i++;
-		}
-		if (philo->have_time_to_eat && philo->num_of_time_to_eat < 0)
+		}		
+		pthread_mutex_lock(&philo[0].mutex_eat_num);
+		eat_num = philo[0].num_of_time_to_eat;
+		pthread_mutex_unlock(&philo[0].mutex_eat_num);
+		if (philo[0].have_time_to_eat && eat_num < 0)
 			return (1);
 	}
 	return (0);
